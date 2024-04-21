@@ -19,6 +19,7 @@ import userRouter from './routes/user.routes.js';
 import doctorRouter from './routes/doctor.routes.js';
 
 //routes declaration
+app.get("/", (req, res) => res.send("Hello"))
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/doctors", doctorRouter)
 
