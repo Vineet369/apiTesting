@@ -1,0 +1,48 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        
+        roman = {"M":1000, "D":500, "C":100, "L":50, "X":10, "V":5, "I":1}
+        num = roman[s[len(s) - 1]]
+        # for i in s:
+        #     romanToInt.append(roman[i])
+        
+        # while True:
+        #     if (len(romanToInt) == 0):
+        #         return num
+            
+        #     elif(len(romanToInt) == 1):
+        #         num = num + romanToInt[0]
+        #         return num
+            
+        #     elif romanToInt[-1] > romanToInt[-2]:
+        #         num = num + romanToInt[-1] - romanToInt[-2] 
+        #         romanToInt.pop()
+        #         romanToInt.pop()
+        #         # romanToInt.append(num)
+        #         print("1",num,romanToInt,"\n")
+        
+        #     elif romanToInt[-1] <= romanToInt[-2]:
+        #         num = num + romanToInt[-1] 
+        #         romanToInt.pop()
+        #         # romanToInt.pop()
+        #         # romanToInt.append(num)
+        #         print("2", num,romanToInt, "\n")
+
+
+        for i in range(len(s)-2, -1, -1):
+            
+            if roman[s[i]] >= roman[s[i+1]]:
+                num = num + roman[s[i]] 
+                print("1",num,roman,"\n")
+        
+            else:
+                num = num - roman[s[i]] 
+                print("2", num,roman, "\n")
+        return num
+
+
+    
+a = Solution()
+
+b = a.romanToInt("MDCCXC")    
+print(b)
