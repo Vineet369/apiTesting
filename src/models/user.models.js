@@ -11,12 +11,12 @@ const userSchema = new Schema({
         trim: true,
         
     },
-    fullName: {
-        type: String,
-        required: true,
-        trim: true,
-        index: true
-    },
+    // fullName: {
+    //     type: String,
+    //     required: true,
+    //     trim: true,
+        
+    // },
 
     bloodType: {
         type: String, 

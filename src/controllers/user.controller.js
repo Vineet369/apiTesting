@@ -23,18 +23,18 @@ const generateAccessAndRefreshToken = async (userId) =>{
 } 
 
 const registerUser = asyncHandler(async (req, res) => {
-
+ 
 
     const { fullName, email, bloodType, contact, address, profileImageURL, password } = req.body
-
+    
     // check validation, not empty
 
-    if(
-        [fullName, email, bloodType, contact, address, profileImageURL, password].some((field) =>
-        field?.trim()==="")
-    ) {
-        throw new ApiError(400, "All fields are required")
-    }
+    // if(
+    //     [fullName, email, bloodType, contact, address, profileImageURL, password].some((field) =>
+    //     field?.trim()==="")
+    // ) {
+    //     throw new ApiError(400, "All fields are required")
+    // }
 
     // check if user already exists: fullName , email
 
@@ -45,34 +45,39 @@ const registerUser = asyncHandler(async (req, res) => {
     if ( existedUser ){
         throw new ApiError(409, "User with fullName or email already exists")
     }
-
     // create user object - create entry in database
 
-    const user = await User.create({
-        fullName,
-        email,
-        password,
-        bloodType, 
-        contact, 
-        address, 
-        profileImageURL,
-    })
-
-    // check for user cretion
-
-    const createdUser = await User.findById(user._id).select(
-        "-password -refreshToken"
-    )
-
-    if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while registering the user")
+    try {
+        const user = await User.create({
+            fullName,
+            email,
+            password,
+            bloodType, 
+            contact, 
+            address, 
+            profileImageURL,
+        })
+    
+        // check for user cretion
+    
+    
+        const createdUser = await User.findById(user._id).select(
+            "-password -refreshToken"
+        )
+    
+        if (!createdUser) {
+            throw new ApiError(500, "Something went wrong while registering the user")
+        }
+    
+        // return res
+    
+        return res.status(201).json(
+            new ApiResponse(200, createdUser, "User registered successfully")
+        )
+    } catch (error) {
+        console.log(error)
     }
-
-    // return res
-
-    return res.status(201).json(
-        new ApiResponse(200, createdUser, "User registered successfully")
-    )
+    
 
 })
 
